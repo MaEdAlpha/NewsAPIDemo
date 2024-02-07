@@ -24,7 +24,6 @@ interface INewsRepository {
     //RIGHT WAY
     fun getSavedNews(): Flow<List<Article>> // no need to suspend because flow adds a data stream
     // In Clean Architecture, you udo now use android framework related libraries in the domain layer
-
     // That means in repository interface and in use case classes we can only import kotlin language and our own classes.
 
 }
