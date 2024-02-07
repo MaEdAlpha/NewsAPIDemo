@@ -1,12 +1,14 @@
 package com.jetpack.newsapidemo.api
 
 import com.jetpack.newsapidemo.data.api.INewsAPIService
+import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okio.buffer
 import okio.source
 import org.junit.After
 import org.junit.Before
+import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -17,7 +19,7 @@ class NewsAPIServiceTest {
     //Alt + Insert hotkey to generate -> setupFunction -> JUnit4
     @Before //runs before @Test
     fun setUp() {
-        server - MockWebServer()
+        server = MockWebServer()
         service = Retrofit.Builder()
             .baseUrl(server.url(""))
             .addConverterFactory(GsonConverterFactory.create())
@@ -32,6 +34,15 @@ class NewsAPIServiceTest {
         mockResponse.setBody(source.readString(Charsets.UTF_8))
         server.enqueue(mockResponse)
 
+    }
+
+    @Test
+    fun getTopHeadlines_sentRequest_receivedExpected(){
+        runBlocking {
+            enqueueMockResponse("newsresponse.json")
+            val responseBody = service.getTopHeadlines("us", 1).body()
+            val request = server.takeRequest()
+        }
     }
 
     @After //runs after @Test
