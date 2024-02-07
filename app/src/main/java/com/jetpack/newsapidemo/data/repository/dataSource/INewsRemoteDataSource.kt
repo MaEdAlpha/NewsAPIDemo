@@ -4,5 +4,5 @@ import com.jetpack.newsapidemo.data.APIResponse
 import retrofit2.Response
 
 interface INewsRemoteDataSource {
-    suspend fun getTopHeadliners(): Response<APIResponse>
+    suspend fun getTopHeadlines(): Response<APIResponse>
 }
