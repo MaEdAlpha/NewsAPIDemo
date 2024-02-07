@@ -52,6 +52,7 @@ class NewsViewModel(
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                         return true
                     }
+                    else -> false
                 }
             }
         }
