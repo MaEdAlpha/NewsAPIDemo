@@ -55,7 +55,8 @@ dependencies {
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVer")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVer")
-
+    //MockWebServerr
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
