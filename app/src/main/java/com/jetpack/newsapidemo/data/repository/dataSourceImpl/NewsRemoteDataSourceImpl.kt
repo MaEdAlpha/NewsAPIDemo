@@ -7,10 +7,8 @@ import retrofit2.Response
 
 class NewsRemoteDataSourceImpl(
     private val newsAPIService: INewsAPIService,
-    private val country: String,
-    private val page: Int,
 ) : INewsRemoteDataSource {
-    override suspend fun getTopHeadliners(): Response<APIResponse> {
+    override suspend fun getTopHeadlines(country: String, page: Int): Response<APIResponse> {
         return newsAPIService.getTopHeadlines(country, page)
     }
 }
