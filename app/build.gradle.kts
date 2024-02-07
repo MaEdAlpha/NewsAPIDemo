@@ -48,8 +48,8 @@ dependencies {
     val gsonVer = "2.10.1"
     val coroutineVer = "1.8.0-RC2"
     val retrofitVer = "2.9.0"
-    val lifecycle_version = "2.7.0"
-    val arch_version = "2.2.0"
+    val lifecycleVersion = "2.7.0"
+    val hiltVer = "2.44"
 
     //GSON
     implementation("com.google.code.gson:gson:$gsonVer")
@@ -65,11 +65,14 @@ dependencies {
     testImplementation("com.google.truth:truth:1.4.0")
 
     //Lifecycle for ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     // Annotation processor
-    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
+    // Hilt
+    implementation("com.google.dagger:hilt-android:$hiltVer")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVer")
 
 
     //Defaults
@@ -80,4 +83,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
