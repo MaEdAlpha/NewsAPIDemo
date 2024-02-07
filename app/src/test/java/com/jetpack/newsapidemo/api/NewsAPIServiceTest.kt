@@ -1,5 +1,6 @@
 package com.jetpack.newsapidemo.api
 
+import com.google.common.truth.Truth.assertThat
 import com.jetpack.newsapidemo.data.api.INewsAPIService
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -36,12 +37,39 @@ class NewsAPIServiceTest {
 
     }
 
-    @Test
+    @Test()
     fun getTopHeadlines_sentRequest_receivedExpected(){
         runBlocking {
             enqueueMockResponse("newsresponse.json")
             val responseBody = service.getTopHeadlines("us", 1).body()
             val request = server.takeRequest()
+
+            assertThat(responseBody).isNotNull()
+            assertThat(request.path).isEqualTo("/v2/top-headlines?country=us&page=1&apiKey=4dd1226114004a0e98a9f4ebeb6be8e5")
+        }
+    }
+
+    @Test
+    fun getTopHeadlines_receivedResponse_correctPageSize(){
+        runBlocking {
+            enqueueMockResponse("newsresponse.json")
+            val responseBody = service.getTopHeadlines("us", 1).body()
+            val articlesList = responseBody!!.articles
+            assertThat(articlesList.size).isEqualTo(20)
+        }
+    }
+
+    @Test
+    fun getTopHeadlines_receivedResponse_correctContent(){
+        runBlocking {
+            enqueueMockResponse("newsresponse.json")
+            val responseBody = service.getTopHeadlines("us", 1).body()
+            val articlesList = responseBody!!.articles
+            val article = articlesList[0]
+            assertThat(article.author).isEqualTo("Richard Lawler")
+            assertThat(article.url).isEqualTo("https://www.theverge.com/2024/2/6/24063317/vision-pro-viral-videos-tesla-cybertruck-autopilot")
+            assertThat(article.source.id).isEqualTo("the-verge")
+
         }
     }
 

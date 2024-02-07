@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -47,6 +48,9 @@ dependencies {
     val gsonVer = "2.10.1"
     val coroutineVer = "1.8.0-RC2"
     val retrofitVer = "2.9.0"
+    val lifecycle_version = "2.7.0"
+    val arch_version = "2.2.0"
+
     //GSON
     implementation("com.google.code.gson:gson:$gsonVer")
 
@@ -57,7 +61,18 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVer")
     //MockWebServerr
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    //Truth Library
+    testImplementation("com.google.truth:truth:1.4.0")
 
+    //Lifecycle for ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    // Annotation processor
+    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+
+
+    //Defaults
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
