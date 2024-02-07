@@ -36,6 +36,10 @@ android {
 }
 
 dependencies {
+    val gsonVer = "2.10.1"
+
+    //GSON
+    implementation("com.google.code.gson:gson:$gsonVer")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

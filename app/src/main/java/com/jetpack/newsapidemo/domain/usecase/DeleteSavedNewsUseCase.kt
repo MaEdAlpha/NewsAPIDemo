@@ -1,4 +1,6 @@
 package com.jetpack.newsapidemo.domain.usecase
 
-class DeleteSavedNewsUseCase {
+import com.jetpack.newsapidemo.domain.repository.INewsRepository
+
+class DeleteSavedNewsUseCase(private val newsRepository: INewsRepository) {
 }

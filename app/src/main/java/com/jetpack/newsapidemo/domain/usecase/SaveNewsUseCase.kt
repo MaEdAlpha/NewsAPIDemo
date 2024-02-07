@@ -1,4 +1,6 @@
 package com.jetpack.newsapidemo.domain.usecase
 
-class SaveNewsUseCase {
+import com.jetpack.newsapidemo.domain.repository.INewsRepository
+
+class SaveNewsUseCase(private val newsRepository: INewsRepository) {
 }
