@@ -13,6 +13,7 @@ import com.jetpack.newsapidemo.data.Article
 import com.jetpack.newsapidemo.data.util.Resource
 import com.jetpack.newsapidemo.domain.usecase.GetNewsHeadlinesUseCase
 import com.jetpack.newsapidemo.domain.usecase.GetSearchedNewsUseCase
+import com.jetpack.newsapidemo.domain.usecase.SaveNewsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.Exception
@@ -20,7 +21,8 @@ import kotlin.Exception
 class NewsViewModel(
     private val app: Application,
     private val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase,
-    private val getSearchedNewsUseCase: GetSearchedNewsUseCase
+    private val getSearchedNewsUseCase: GetSearchedNewsUseCase,
+    private val saveNewsUseCase: SaveNewsUseCase
 ) : AndroidViewModel(app){
    val newsHeadlines: MutableLiveData<Resource<APIResponse>> = MutableLiveData()
 
@@ -86,6 +88,6 @@ class NewsViewModel(
 
     //save article to local database
     fun saveArticle(article:Article) = viewModelScope.launch {
-
+        saveNewsUseCase.execute(article)
     }
 }
