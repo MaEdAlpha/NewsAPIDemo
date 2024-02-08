@@ -5,4 +5,5 @@
     <color name="list_background">#2F2C2A</color>
     <color name="list_text">#FFFFFFFF</color>
     <color  name="layout_background">#000000</color>
+    <color name="search_bg">#5D4E43</color>
 </resources>
