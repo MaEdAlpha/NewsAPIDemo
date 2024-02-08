@@ -1,15 +1,13 @@
 package com.jetpack.newsapidemo.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.Objects
 
-data class NewsSource(
-    val id: String,
-    val name: String
-)
+
 data class Article (
     @SerializedName("source")
-    val source: NewsSource,
+    val source: Source,
 
     @SerializedName("author")
     val author: String,
@@ -31,4 +29,4 @@ data class Article (
 
     @SerializedName("content")
     val content: String,
-)
+) : Serializable

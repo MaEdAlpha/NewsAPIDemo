@@ -6,7 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import com.jetpack.newsapidemo.BuildConfig
 interface INewsAPIService {
-
     @GET("v2/top-headlines")
     suspend fun getTopHeadlines(
         @Query("country") //based off api documentation
