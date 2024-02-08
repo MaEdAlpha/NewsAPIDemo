@@ -3,6 +3,7 @@ package com.jetpack.newsapidemo.presentation.di
 import com.jetpack.newsapidemo.domain.repository.INewsRepository
 import com.jetpack.newsapidemo.domain.usecase.GetNewsHeadlinesUseCase
 import com.jetpack.newsapidemo.domain.usecase.GetSearchedNewsUseCase
+import com.jetpack.newsapidemo.domain.usecase.SaveNewsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,5 +29,14 @@ class UseCaseModule {
     ) : GetSearchedNewsUseCase{
         //construct and return dependency
         return GetSearchedNewsUseCase(newsRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveNewsUseCase(
+        newsRepository: INewsRepository
+    ) : SaveNewsUseCase{
+        //construct and return dependency
+        return SaveNewsUseCase(newsRepository)
     }
 }
