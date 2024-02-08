@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jetpack.newsapidemo.data.APIResponse
+import com.jetpack.newsapidemo.data.Article
 import com.jetpack.newsapidemo.data.util.Resource
 import com.jetpack.newsapidemo.domain.usecase.GetNewsHeadlinesUseCase
 import com.jetpack.newsapidemo.domain.usecase.GetSearchedNewsUseCase
@@ -81,5 +82,10 @@ class NewsViewModel(
         }catch(e:Exception){
             searchedNews.postValue(Resource.Error(e.message.toString()))
         }
+    }
+
+    //save article to local database
+    fun saveArticle(article:Article) = viewModelScope.launch {
+
     }
 }

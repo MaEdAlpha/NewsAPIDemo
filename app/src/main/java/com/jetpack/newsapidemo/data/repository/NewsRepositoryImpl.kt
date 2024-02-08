@@ -3,6 +3,7 @@ package com.jetpack.newsapidemo.data.repository
 import com.jetpack.newsapidemo.data.APIResponse
 import com.jetpack.newsapidemo.data.Article
 import com.jetpack.newsapidemo.data.repository.dataSource.INewsRemoteDataSource
+import com.jetpack.newsapidemo.data.repository.dataSource.NewsLocalDataSource
 import com.jetpack.newsapidemo.data.util.Resource
 import com.jetpack.newsapidemo.domain.repository.INewsRepository
 import kotlinx.coroutines.flow.Flow
@@ -10,6 +11,7 @@ import retrofit2.Response
 
 class NewsRepositoryImpl(
     private val newsRemoteDataSource: INewsRemoteDataSource,
+    private val newsLocalDataSource: NewsLocalDataSource
 
 ): INewsRepository {
     override suspend fun getNewsHeadlines(
@@ -42,7 +44,7 @@ class NewsRepositoryImpl(
     }
 
     override suspend fun saveNews(article: Article) {
-        TODO("Not yet implemented")
+        newsLocalDataSource.saveArticleToDB(article)
     }
 
     override suspend fun deleteNews(article: Article) {
