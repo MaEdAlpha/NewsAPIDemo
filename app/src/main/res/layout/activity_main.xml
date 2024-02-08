@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:background="@color/search_bg"
     android:orientation="vertical">
 
     <androidx.fragment.app.FragmentContainerView
@@ -29,7 +30,7 @@
             android:id="@+id/bnv_news"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:background="@color/search_bg"
             app:menu="@menu/bottom_menu" />
     </androidx.cardview.widget.CardView>
 </LinearLayout>
