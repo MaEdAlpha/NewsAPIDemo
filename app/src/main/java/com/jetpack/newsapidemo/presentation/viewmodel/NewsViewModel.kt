@@ -16,12 +16,13 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class NewsViewModel(
-    val app: Application,
-    val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase
+    private val app: Application,
+    private val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase
 ) : AndroidViewModel(app){
    val newsHeadlines: MutableLiveData<Resource<APIResponse>> = MutableLiveData()
 
     fun getNewsHeadlines(country: String, page: Int) = viewModelScope.launch(Dispatchers.IO) {
+        newsHeadlines.postValue(Resource.Loading())
         try {
             if(isNetworkAvailable(app)){
                 newsHeadlines.postValue(Resource.Loading())
@@ -37,9 +38,6 @@ class NewsViewModel(
 
     //Handle internet availability.
     private fun isNetworkAvailable(context: Context):Boolean{
-       return true
-        if (context != null) return false
-
         val connectivityManager = context.getSystemService(ConnectivityManager::class.java)
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -52,7 +50,6 @@ class NewsViewModel(
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                         return true
                     }
-                    else -> false
                 }
             }
         }
