@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,9 @@ import com.jetpack.newsapidemo.data.util.Resource
 import com.jetpack.newsapidemo.databinding.FragmentNewsBinding
 import com.jetpack.newsapidemo.presentation.adapter.NewsAdapter
 import com.jetpack.newsapidemo.presentation.viewmodel.NewsViewModel
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class NewsFragment : Fragment() {
@@ -53,6 +57,7 @@ class NewsFragment : Fragment() {
         }
         initRecyclerView()
         viewNewsList()
+        setSearchView()
     }
 
     private fun viewNewsList() {
@@ -132,4 +137,62 @@ class NewsFragment : Fragment() {
         }
     }
 
+    //search functionality.
+    private fun setSearchView(){
+        fragmentNewsBinding.svNews.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+               viewModel.searchNews("us", query.toString(), page)
+                viewSearchedNews()
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                MainScope().launch {
+                    delay(1500)
+                    viewSearchedNews()
+                    viewModel.searchNews("us", newText.toString(), page)
+                }
+                return false
+            }
+        })
+
+        fragmentNewsBinding.svNews.setOnCloseListener(object: SearchView.OnCloseListener{
+            override fun onClose(): Boolean {
+                initRecyclerView()
+                viewNewsList()
+                return false
+            }
+
+        })
+    }
+    fun viewSearchedNews(){
+        viewModel.searchedNews.observe(viewLifecycleOwner, Observer { response->
+            when(response){
+                is Resource.Success->{
+                    Log.d("MYTAG", "SUCCESS searchedQuery executed!")
+                    hideProgressBar()
+                    response.data?.let {
+                        newsAdapter.differ.submitList(it.articles.toList())
+                        if(it.totalResults%20 == 0){
+                            pages = it.totalResults/20
+                        }else{
+                            pages = it.totalResults/20+1
+                        }
+                        isLastPage = page == pages
+                    }
+                }
+                is Resource.Error->{
+                    hideProgressBar()
+                    response.message?.let {
+                        Toast.makeText(activity,"An error occurred : $it", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                is Resource.Loading->{
+                    showProgressBar()
+                }
+
+            }
+        })
+    }
 }
