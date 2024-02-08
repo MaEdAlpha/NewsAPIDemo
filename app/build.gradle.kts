@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -17,8 +19,6 @@ android {
         buildConfigField("String", "API_KEY", project.properties["MY_KEY"].toString())
         buildConfigField("String", "URL", project.properties["BASE_URL"].toString())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-
     }
 
     buildTypes {
@@ -34,7 +34,9 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -49,7 +51,8 @@ dependencies {
     val coroutineVer = "1.8.0-RC2"
     val retrofitVer = "2.9.0"
     val lifecycleVersion = "2.7.0"
-    val hiltVer = "2.44"
+    val hiltVer = "2.50"
+    val navVersion = "2.7.7"
 
     //GSON
     implementation("com.google.code.gson:gson:$gsonVer")
@@ -69,10 +72,16 @@ dependencies {
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     // Annotation processor
-    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
+    //kapt("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
+
     // Hilt
     implementation("com.google.dagger:hilt-android:$hiltVer")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVer")
+
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
 
     //Defaults
@@ -85,7 +94,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
 
-// Allow references to generated code
+
 kapt {
     correctErrorTypes = true
 }

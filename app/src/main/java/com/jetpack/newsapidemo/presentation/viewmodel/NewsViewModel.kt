@@ -37,6 +37,7 @@ class NewsViewModel(
 
     //Handle internet availability.
     private fun isNetworkAvailable(context: Context):Boolean{
+       return true
         if (context != null) return false
 
         val connectivityManager = context.getSystemService(ConnectivityManager::class.java)
