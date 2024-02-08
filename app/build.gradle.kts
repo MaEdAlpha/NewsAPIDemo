@@ -57,6 +57,7 @@ dependencies {
     val hiltVer = "2.50"
     val navVersion = "2.7.7"
     val glideVer = "4.16.0"
+    val roomVersion = "2.6.1"
 
     //GSON
     implementation("com.google.code.gson:gson:$gsonVer")
@@ -91,6 +92,19 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:$glideVer")
     // Skip this if you don't want to use integration libraries or configure Glide.
     kapt("com.github.bumptech.glide:compiler:$glideVer")
+
+    //Room
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$roomVersion")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$roomVersion")
+    // optional - Test helpers
+    testImplementation("androidx.room:room-testing:$roomVersion")
+
+
     //Defaults
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
